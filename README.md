@@ -66,3 +66,14 @@ Runner offline: repo → Settings → Actions → Runners → check status; rest
 bash
 Copy code
 cd ~/actions-runner && sudo ./svc.sh restart
+
+# Rail-2 Deploy
+
+Central orchestrator that pulls GHCR images and runs them via Docker Compose on the self-hosted runner (EC2).
+
+## Use
+- Actions → deploy → Run workflow (or pushes to main).
+- Each service repo can `repository_dispatch` here after publishing an image.
+
+## Prereqs
+- Org secrets: GHCR_USERNAME, GHCR_TOKEN

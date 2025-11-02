@@ -1,12 +1,13 @@
 version: "3.9"
 
 services:
-  mev-shield:
-    image: ghcr.io/genesis-rail2/genesis-mev-shield:main
+  mevshield:
+    image: mevshield:latest            # use the image we already built on the node
+    container_name: mevshield
     restart: unless-stopped
-    env_file: .env
-
-  sac:
-    image: ghcr.io/genesis-rail2/sac-soverign-autonomy-core:main
-    restart: unless-stopped
-    env_file: .env
+    ports:
+      - "8080:8080"
+    env_file:
+      - /home/ubuntu/genesis-rail2/repos/GENESIS-MEV-SHIELD/.env
+    volumes:
+      - /home/ubuntu/genesis-rail2/repos/GENESIS-MEV-SHIELD/logs:/app/logs

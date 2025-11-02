@@ -1,0 +1,12 @@
+version: "3.9"
+
+services:
+  mev-shield:
+    image: ghcr.io/genesis-rail2/genesis-mev-shield:main
+    restart: unless-stopped
+    env_file: .env
+
+  sac:
+    image: ghcr.io/genesis-rail2/sac-soverign-autonomy-core:main
+    restart: unless-stopped
+    env_file: .env

@@ -1,0 +1,28 @@
+name: deploy
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+jobs:
+  compose:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+      - name: Login GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ secrets.GHCR_USERNAME }}
+          password: ${{ secrets.GHCR_TOKEN }}
+      - name: Write .env
+        run: |
+          cat > .env <<EOF
+          SERVICE_STAGE=staging
+          LOG_LEVEL=info
+          PROMETHEUS_ENABLED=true
+          EOF
+      - name: Pull images
+        run: docker compose pull
+      - name: Start stack
+        run: docker compose up -d --remove-orphans
